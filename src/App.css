@@ -1,0 +1,119 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*************************************************************/
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-family: 'Public Sans', sans-serif;
+}
+
+.app {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.app > h1 {
+  color: #ff5d66;
+  font-size: 2em;
+}
+
+@media(max-width: 800px) {
+  .app {
+    width: 90%;
+  }
+}
+
+.app .search-container .btn,
+.app .search-container input {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+}
+
+.app .search-container .btn {
+  background: #4aa0fb;
+  color: #fff;
+}
+
+.app .results > ul {
+  list-style-type: none;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 0 150px 0;
+  padding: 0;
+}
+
+.app .results > ul > li {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20vw;
+  height: 20vw;
+  max-width: 170px;
+  max-height: 170px;
+  min-width: 100px;
+  min-height: 100px;;
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+  box-shadow: 0 2px 2px #ccc;
+  border: 1px solid #ccc;
+}
+
+.app .results > ul > li > h1 {
+  margin: 0 0 10px 0;
+  font-size: 1.4em;
+  text-transform: uppercase;
+}
+
+.app p.no-result {
+  display: none;
+}
+
+.player {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
