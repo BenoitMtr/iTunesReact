@@ -65,9 +65,10 @@ const Itunes = () => {
      * Perform a search request + add the results to the DOM
      */
     const search = async () => {
-        let searchValue = searchInput.value.trim();
+        let searchValue = document.querySelector('#search').value.trim();
+        console.log("valeur: "+searchValue);
         if (!searchValue) return;
-        songsList.innerZHTML = '';
+        document.querySelector('.results').innerZHTML = '';
 
         searchValue = searchValue.replace(' ', '+');
         const response = await fetchItunesSongs(searchValue);
@@ -78,7 +79,7 @@ const Itunes = () => {
             songs.forEach((s) => {
                 ul.appendChild(createSongLI(s));
             });
-            songsList.appendChild(ul);
+            document.querySelector('.results').appendChild(ul);
         } else {
             document.querySelector('.no-result').style.display = 'block';
         }
@@ -88,15 +89,15 @@ const Itunes = () => {
     /**
      * Bind keypress event on input to catch the enter key event
      */
-    searchInput.addEventListener('keypress', (e) => {
+   /* searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             search();
         }
-    });
+    });*/
 // bind the click on button
-    searchBtn.addEventListener('click', search);
+   // searchBtn.addEventListener('click', search);
 // bind the click on result list
-    songsList.addEventListener('click', handleClickSong);
+  //  songsList.addEventListener('click', handleClickSong);
 
 
     // event handler pour l'input
@@ -130,7 +131,7 @@ const Itunes = () => {
             <h1>ITUNES API</h1>
             <div className="search-container">
                 <input type="text" placeholder="search" id="search"/>
-                <button type="button" className="btn">Search</button>
+                <button type="button" className="btn" onClick={search}>Search</button>
             </div>
             <div className="results"></div>
             <p className="no-result">
