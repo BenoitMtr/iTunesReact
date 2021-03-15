@@ -1,13 +1,17 @@
+import './iTunes.css';
 import {useState} from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faSpinner } from '@fortawesome/free-solid-svg-icons'
 const API = 'https://itunes.apple.com/search';
 
+const historique={};
+
 const Itunes = () => {
-    const audioTag = document.querySelector('audio');
     const searchInput = document.querySelector('#search');
     const searchBtn = document.querySelector('.search-container .btn');
     const songsList = document.querySelector('.results');
 
-    const [myhobbies, setMyHobbies] = useState(['tennis', 'jeux videos']); // le state pour la liste de hobby
+    const [historique, setHistorique] = useState(['']); // le state pour la liste de hobby
     const [inputValue, setInputValue] = useState('');
 
     /**
@@ -18,6 +22,10 @@ const Itunes = () => {
     const fetchItunesSongs = async (term) => {
         try {
             const url = `${API}?term=${term}`;
+            setHistorique((previousHistory) => {
+                return [...previousHistory, url];
+            });
+            console.log(...historique);
             const response = await fetch(url);
             console.log(response)
             const responseJson = await response.json();
@@ -34,9 +42,12 @@ const Itunes = () => {
      * @param {object} event
      */
     const handleClickSong = (event) => {
+        const audioTag = document.querySelector('audio');
+
         const target = event.target;
-        console.log(target);
+        console.log("target:"+target);
         if (target.tagName !== 'LI' && !target.getAttribute('data-preview')) {
+            console.log("pas bon");
             return;
         }
         audioTag.setAttribute('src', target.getAttribute('data-preview'));
@@ -68,9 +79,12 @@ const Itunes = () => {
         let searchValue = document.querySelector('#search').value.trim();
         console.log("valeur: "+searchValue);
         if (!searchValue) return;
-        document.querySelector('.results').innerZHTML = '';
+        document.querySelector('.results').innerHTML = '' +
+            '<p> chargement </p>' +
+            '<FontAwesomeIcon icon={faSpinner} spin/>';
 
         searchValue = searchValue.replace(' ', '+');
+
         const response = await fetchItunesSongs(searchValue);
         if (response.resultCount) {
             document.querySelector('.no-result').style.display = 'none';
@@ -79,6 +93,7 @@ const Itunes = () => {
             songs.forEach((s) => {
                 ul.appendChild(createSongLI(s));
             });
+            document.querySelector('.results').innerHTML = '';
             document.querySelector('.results').appendChild(ul);
         } else {
             document.querySelector('.no-result').style.display = 'block';
@@ -106,26 +121,6 @@ const Itunes = () => {
         setInputValue(e.target.value);
     };
 
-    // event handler pour le click sur le bouton
-    const handleClickNew = () => {
-        // on modifie la liste de hobbie qui est dans le state avec setHobbies
-        setMyHobbies((previousHobbies) => {
-            // la nouvelle valeur de a liste = ancienne valeur + la valeur saisie
-            return [...previousHobbies, inputValue];
-        });
-        // on change la valeur du state inputValue => string vide (reset)
-        setInputValue('');
-    };
-
-    const handleClickRemoveHobby = (hobbyToRemove) => { // hoobyToRemove est le hobby à supprimer
-        // on utilise la méthode filter qui va renvoyer un nouveau tableau
-        const newHobbiesList = myhobbies.filter(
-            (hobby) => hobby !== hobbyToRemove && hobby,
-        );
-        // on met à jour le state avec le nouveau tableau
-        setMyHobbies(newHobbiesList);
-    };
-
     return (
         <section className="app">
             <h1>ITUNES API</h1>
@@ -133,7 +128,9 @@ const Itunes = () => {
                 <input type="text" placeholder="search" id="search"/>
                 <button type="button" className="btn" onClick={search}>Search</button>
             </div>
-            <div className="results"></div>
+            <div className="results">
+            </div>
+
             <p className="no-result">
                 No results found<br/>Try different keywords
             </p>
