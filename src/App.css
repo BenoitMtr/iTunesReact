@@ -46,16 +46,6 @@ html {
   font-family: 'Public Sans', sans-serif;
 }
 
-.app {
-  width: 80%;
-  margin: 0 auto;
-}
-
-.app > h1 {
-  color: #ff5d66;
-  font-size: 2em;
-}
-
 @media(max-width: 800px) {
   .app {
     width: 90%;
@@ -97,13 +87,11 @@ html {
   min-width: 100px;
   min-height: 100px;;
   padding: 10px;
-  margin: 10px 10px 10px 0;
   box-shadow: 0 2px 2px #ccc;
   border: 1px solid #ccc;
 }
 
 .app .results > ul > li > h1 {
-  margin: 0 0 10px 0;
   font-size: 1.4em;
   text-transform: uppercase;
 }
