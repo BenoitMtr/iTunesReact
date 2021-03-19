@@ -87,8 +87,8 @@ html {
   min-width: 100px;
   min-height: 100px;;
   padding: 10px;
-  box-shadow: 0 2px 2px #ccc;
-  border: 1px solid #ccc;
+  box-shadow: 0 2px 2px #cccccc;
+  border: 1px solid #cccccc;
 }
 
 .app .results > ul > li > h1 {
@@ -104,4 +104,10 @@ html {
   position: fixed;
   bottom: 0;
   width: 100%;
+  visibility: hidden;
+}
+
+.app .results > li
+{
+  border: 2px solid black;
 }

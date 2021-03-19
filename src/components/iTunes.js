@@ -4,7 +4,6 @@ import { Button, TextField, FormControl, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { ThemeProvider } from 'styled-components'
 import * as css from './theme.css'
 import { GlobalStyles } from './global'
 import classNames from 'classnames'
@@ -14,22 +13,22 @@ import Switch from '@material-ui/core/Switch'
 import ReactDOM from 'react-dom'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { TextFormat } from '@material-ui/icons'
+import {render} from "@testing-library/react";
 
 const API = 'https://itunes.apple.com/search'
 
 const historique = {}
 
+
 const Itunes = () => {
-    const resultList = []
     const { theme, lumiere, color, toggleTheme } = useContext(ThemeContext)
-    const searchInput = document.querySelector('#search')
-    const searchBtn = document.querySelector('.search-container .btn')
-    const songsList = document.querySelector('.results')
 
     const [historique, setHistorique] = useState(['']) // le state pour la liste de hobby
     const [inputValue, setInputValue] = useState('')
     const [searchValue, setSearchValue] = useState('')
-    const [results, setResults] = useState('')
+    const [results, setResults] = useState({
+        resultList: [],
+    })
     const [state, setState] = React.useState({
         checkedA: true,
         checkedB: true,
@@ -45,44 +44,25 @@ const Itunes = () => {
      * Play the song
      * @param {object} event
      */
-    const handleClickSong = (event) => {
-        const audioTag = document.querySelector('audio')
+    const handleClickSong = (e) => {
+        const audioTag = document.querySelector(".player");
 
-        const target = event.target
-        console.log('target:' + target)
-        if (target.tagName !== 'LI' && !target.getAttribute('data-preview')) {
-            console.log('pas bon')
-            return
-        }
-        audioTag.setAttribute('src', target.getAttribute('data-preview'))
+        audioTag.setAttribute('src', e.target.getAttribute('data-preview'))
         audioTag.play()
-    }
-
-    const createSongLI = (s) => {
-        const h1 = React.createElement('h1', null, s.artistName)
-        const span = React.createElement('span', null, s.trackName)
-        const li = React.createElement(
-            'li',
-            {
-                id: s.trackId,
-                'data-preview': s.previewUrl,
-                onClick: handleClickSong,
-            },
-            { h1, span }
-        )
-        return li
     }
 
     /**
      * Perform a search request + add the results to the DOM
      */
     const search = async () => {
+        const resultListTemp = []
+
         console.log('valeur: ' + searchValue)
         if (!searchValue) return
         document.querySelector('.results').innerHTML =
             '' +
-            '<p> chargement </p>' +
-            '<FontAwesomeIcon icon={faSpinner} spin/>'
+            '<p> chargement </p>';
+           // '<FontAwesomeIcon icon={faSpinner} spin/>'
 
         // searchValue = searchValue.replace(' ', '+')
 
@@ -91,18 +71,19 @@ const Itunes = () => {
             document.querySelector('.no-result').style.display = 'none'
             const songs = response.results.filter((r) => r.kind === 'song')
             console.log('songs: ' + songs.toString())
+            let t=results.resultList ? results.resultList:[];
             songs.forEach((s) => {
                 console.log(s)
-                setResults((previousResultList) => {
-                    return [...previousResultList, s]
-                })
+
+                t.push(s);
+
                 // resultList.push(createSongLI(s))
             })
-            const ul = React.createElement('ul', null, resultList)
-            console.log(resultList.toString())
-            // document.querySelector('.results').innerHTML = ''
-            // ReactDOM.render(ul, document.getElementById('results'))
-            //ReactDOM.unmountComponentAtNode(document.getElementById('results'))
+            document.querySelector('.results').innerHTML = ''
+            setResults({resultList: t})
+            const ul = React.createElement('ul', null, results.resultList)
+
+
             // document.querySelector('.results').appendChild(ul)
         } else {
             document.querySelector('.no-result').style.display = 'block'
@@ -212,8 +193,10 @@ const Itunes = () => {
             </div>
 
             <div className="results" id="results">
-                {(results || []).map((result, index) => {
-                    return <div key={index}>{createSongLI(result)}</div>
+                {(results.resultList || []).map((result, index) => {
+                    return <li key={index} id={result.trackId} data-preview={result.previewUrl} onClick={handleClickSong}>
+                        <h1>{result.artistName}</h1>
+                        <span>{result.trackName}</span></li>
                 })}
             </div>
 
