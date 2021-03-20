@@ -13,12 +13,11 @@ import Switch from '@material-ui/core/Switch'
 import ReactDOM from 'react-dom'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { TextFormat } from '@material-ui/icons'
-import {render} from "@testing-library/react";
+import { render } from '@testing-library/react'
 
 const API = 'https://itunes.apple.com/search'
 
 const historique = {}
-
 
 const Itunes = () => {
     const { theme, lumiere, color, toggleTheme } = useContext(ThemeContext)
@@ -45,7 +44,7 @@ const Itunes = () => {
      * @param {object} event
      */
     const handleClickSong = (e) => {
-        const audioTag = document.querySelector(".player");
+        const audioTag = document.querySelector('.player')
 
         audioTag.setAttribute('src', e.target.getAttribute('data-preview'))
         audioTag.play()
@@ -60,9 +59,8 @@ const Itunes = () => {
         console.log('valeur: ' + searchValue)
         if (!searchValue) return
         document.querySelector('.results').innerHTML =
-            '' +
-            '<p> chargement </p>';
-           // '<FontAwesomeIcon icon={faSpinner} spin/>'
+            '' + '<p> chargement </p>'
+        // '<FontAwesomeIcon icon={faSpinner} spin/>'
 
         // searchValue = searchValue.replace(' ', '+')
 
@@ -71,18 +69,22 @@ const Itunes = () => {
             document.querySelector('.no-result').style.display = 'none'
             const songs = response.results.filter((r) => r.kind === 'song')
             console.log('songs: ' + songs.toString())
-            let t=results.resultList ? results.resultList:[];
+            let t = results.resultList ? results.resultList : []
             songs.forEach((s) => {
                 console.log(s)
 
-                t.push(s);
+                t.push(s)
 
                 // resultList.push(createSongLI(s))
             })
             document.querySelector('.results').innerHTML = ''
-            setResults({resultList: t})
-            const ul = React.createElement('ul', null, results.resultList)
-
+            setResults({ resultList: t })
+            const ul = React.createElement(
+                'ul',
+                { style: { color: 'red', backgroundColor: 'blue' } },
+                null,
+                results.resultList
+            )
 
             // document.querySelector('.results').appendChild(ul)
         } else {
@@ -194,9 +196,21 @@ const Itunes = () => {
 
             <div className="results" id="results">
                 {(results.resultList || []).map((result, index) => {
-                    return <li key={index} id={result.trackId} data-preview={result.previewUrl} onClick={handleClickSong}>
-                        <h1>{result.artistName}</h1>
-                        <span>{result.trackName}</span></li>
+                    return (
+                        <li
+                            className={classNames([css.lightTitleStyle], {
+                                [css.lightTitleStyle]: theme === 'light',
+                                [css.darkTitleStyle]: theme === 'dark',
+                            })}
+                            key={index}
+                            id={result.trackId}
+                            data-preview={result.previewUrl}
+                            onClick={handleClickSong}
+                        >
+                            <h1>{result.artistName}</h1>
+                            <span>{result.trackName}</span>
+                        </li>
+                    )
                 })}
             </div>
 

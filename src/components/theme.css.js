@@ -11,13 +11,17 @@ export const darkText = css`
 `
 
 export const lightThemeBackground = css`
-    background: #e2e2e2 !important;
+    background-color: #e2e2e2 !important;
     color: black !important;
+    justify-content: center;
+    text-align: center;
 `
 
 export const darkThemeBackground = css`
-    background: #363537 !important;
+    background-color: #363537 !important;
     color: black !important;
+    justify-content: center;
+    text-align: center;
 `
 
 export const lightTheme = css`
