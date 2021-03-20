@@ -9,11 +9,13 @@ import { GlobalStyles } from './global'
 import classNames from 'classnames'
 import { ThemeContext } from '../themeContext'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import MaterialSwitch from '@material-ui/core/Switch'
 import ReactDOM from 'react-dom'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { TextFormat } from '@material-ui/icons'
 import { render } from '@testing-library/react'
+import { BrowserRouter, Link } from 'react-router-dom'
+import { Route, Switch } from 'react-router'
 
 const API = 'https://itunes.apple.com/search'
 
@@ -44,10 +46,12 @@ const Itunes = () => {
      * @param {object} event
      */
     const handleClickSong = (e) => {
-        const audioTag = document.querySelector('.player')
+
+
+       /* const audioTag = document.querySelector('.player')
 
         audioTag.setAttribute('src', e.target.getAttribute('data-preview'))
-        audioTag.play()
+        audioTag.play()*/
     }
 
     /**
@@ -145,6 +149,7 @@ const Itunes = () => {
 
     return (
         <div className="app">
+
             <Typography
                 variant="h2"
                 className={classNames([css.lightTitleStyle], {
@@ -160,7 +165,7 @@ const Itunes = () => {
                     [css.darkText]: theme === 'dark',
                 })}
                 control={
-                    <Switch
+                    <MaterialSwitch
                         checked={state.checkedB}
                         onChange={handleChange}
                         onClick={toggleTheme}
@@ -207,8 +212,10 @@ const Itunes = () => {
                             data-preview={result.previewUrl}
                             onClick={handleClickSong}
                         >
+
                             <h1>{result.artistName}</h1>
-                            <span>{result.trackName}</span>
+                            <Link to="/song_detail"> <span>{result.trackName}</span></Link>
+
                         </li>
                     )
                 })}
