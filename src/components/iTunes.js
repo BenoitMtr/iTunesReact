@@ -16,6 +16,7 @@ import { TextFormat } from '@material-ui/icons'
 import { render } from '@testing-library/react'
 import { BrowserRouter, Link } from 'react-router-dom'
 import { Route, Switch } from 'react-router'
+import Form from './Form'
 
 const API = 'https://itunes.apple.com/search'
 
@@ -149,7 +150,6 @@ const Itunes = () => {
 
     return (
         <div className="app">
-
             <Typography
                 variant="h2"
                 className={classNames([css.lightTitleStyle], {
@@ -159,6 +159,8 @@ const Itunes = () => {
             >
                 ITUNES API
             </Typography>
+            <Form/>
+            <br/>
             <FormControlLabel
                 className={classNames([], {
                     [css.lightText]: theme === 'light',

@@ -9,6 +9,7 @@ import { ThemeContext } from './themeContext'
 import {  } from 'react-router'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Songdetail from './components/song_detail'
+import Form from './components/Form'
 
 function App() {
     const { theme } = useContext(ThemeContext)
@@ -22,7 +23,7 @@ function App() {
         >
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" render={() => <Itunes/>}>
+                    <Route exact path="/" render={() =>  <Itunes/> }>
                     </Route>
                     <Route path="/song_detail" render={() => <Songdetail />}>
                     </Route>
