@@ -23,7 +23,7 @@ const Songdetail= ({match}) => {
     useEffect(() => {
         if(!pageLoading)
         {
-            search(match.params.song);
+            search(match.params.id);
 
         }
         setPageLoading(true);
@@ -79,7 +79,7 @@ const Songdetail= ({match}) => {
             ITUNES API
         </Typography>
 
-        <img src={result.artworkUrl1100} alt={"disque"}/>
+        <img src={result.artworkUrl100} alt={"disque"}/>
         <h1>{result.trackName}</h1>
         <h2>{result.artistName}</h2>
         <FormControlLabel
