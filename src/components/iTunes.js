@@ -17,12 +17,14 @@ import { render } from '@testing-library/react'
 import { BrowserRouter, Link } from 'react-router-dom'
 import { Route, Switch } from 'react-router'
 import Form from './Form'
+import Songdetail from './song_detail'
 
 const API = 'https://itunes.apple.com/search'
 
 const historique = {}
 
 const Itunes = () => {
+    let songSelected;
     const { theme, lumiere, color, toggleTheme } = useContext(ThemeContext)
 
     const [historique, setHistorique] = useState(['']) // le state pour la liste de hobby
@@ -46,9 +48,9 @@ const Itunes = () => {
      * Play the song
      * @param {object} event
      */
-    const handleClickSong = (e) => {
+    const handleClickSong = (song) => {
 
-
+        songSelected=song;
        /* const audioTag = document.querySelector('.player')
 
         audioTag.setAttribute('src', e.target.getAttribute('data-preview'))
@@ -203,6 +205,8 @@ const Itunes = () => {
 
             <div className="results" id="results">
                 {(results.resultList || []).map((result, index) => {
+                   let fullUrl="/song_detail/"+result.trackId;
+
                     return (
                         <li
                             className={classNames([css.lightTitleStyle], {
@@ -212,11 +216,11 @@ const Itunes = () => {
                             key={index}
                             id={result.trackId}
                             data-preview={result.previewUrl}
-                            onClick={handleClickSong}
+                            onClick={handleClickSong(result)}
                         >
 
                             <h1>{result.artistName}</h1>
-                            <Link to="/song_detail"> <span>{result.trackName}</span></Link>
+                            <Link to={fullUrl}> <span>{result.trackName}</span></Link>
 
                         </li>
                     )
@@ -232,6 +236,8 @@ const Itunes = () => {
                 Your browser does not support the
                 <code>audio</code> element.
             </audio>
+
+
         </div>
     )
 }
