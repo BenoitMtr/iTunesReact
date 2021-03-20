@@ -23,9 +23,9 @@ function App() {
         >
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" render={() =>  <Itunes/> }>
+                    <Route exact path="/" component={Itunes}>
                     </Route>
-                    <Route path="/song_detail" render={() => <Songdetail />}>
+                    <Route path="/song_detail/:id" component={Songdetail}>
                     </Route>
                 </Switch>
             </BrowserRouter>
