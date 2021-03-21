@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 import classNames from 'classnames'
 import * as css from './theme.css'
 import React, { useContext, useEffect, useState } from 'react'
@@ -6,6 +6,7 @@ import { ThemeContext } from '../themeContext'
 import MaterialSwitch from '@material-ui/core/Switch'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import './song_detail.css'
+import { Link } from 'react-router-dom'
 
 
 const Songdetail= ({match}) => {
@@ -68,6 +69,10 @@ const Songdetail= ({match}) => {
         }
     }
 
+    function handleClickBack() {
+        console.log("click back");
+    }
+
     return (<div className="app">
         <Typography
             variant="h2"
@@ -78,10 +83,7 @@ const Songdetail= ({match}) => {
         >
             ITUNES API
         </Typography>
-
-        <img src={result.artworkUrl100} alt={"disque"}/>
-        <h1>{result.trackName}</h1>
-        <h2>{result.artistName}</h2>
+       <Link to={'/'}><Button variant="contained" color="primary" onClick={handleClickBack}>Retour à la liste</Button></Link>
         <FormControlLabel
             className={classNames([], {
                 [css.lightText]: theme === 'light',
@@ -98,6 +100,12 @@ const Songdetail= ({match}) => {
             label={lumiere}
             labelPlacement="top"
         />
+        <br/>
+
+        <img src={result.artworkUrl100} alt={"disque"} width={200} height={200}/>
+        <h1>{result.trackName}</h1>
+        <h2>{result.artistName}</h2>
+
 
         <p>{result.collectionName}</p>
         <p>{result.primaryGenreName}</p>

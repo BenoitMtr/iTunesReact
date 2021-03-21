@@ -1,4 +1,9 @@
-
+Button
 {
-    display:block;
+    float: left;
+}
+
+MicRounded
+{
+    float: left;
 }

@@ -100,12 +100,6 @@ html {
   display: none;
 }
 
-.player {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
 .app .results > li
 {
   border: 2px solid black;

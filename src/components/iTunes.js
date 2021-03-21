@@ -12,27 +12,18 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import MaterialSwitch from '@material-ui/core/Switch'
 import ReactDOM from 'react-dom'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { TextFormat } from '@material-ui/icons'
 import { render } from '@testing-library/react'
 import { BrowserRouter, Link } from 'react-router-dom'
 import { Route, Switch } from 'react-router'
 import Form from './Form'
 import Songdetail from './song_detail'
+import Dictaphone from './search'
+import Search from './search'
 
-const API = 'https://itunes.apple.com/search'
-
-const historique = {}
 
 const Itunes = () => {
-    let songSelected;
-    const { theme, lumiere, color, toggleTheme } = useContext(ThemeContext)
+    const { theme, lumiere, toggleTheme } = useContext(ThemeContext)
 
-    const [historique, setHistorique] = useState(['']) // le state pour la liste de hobby
-    const [inputValue, setInputValue] = useState('')
-    const [searchValue, setSearchValue] = useState('')
-    const [results, setResults] = useState({
-        resultList: [],
-    })
     const [state, setState] = React.useState({
         checkedA: true,
         checkedB: true,
@@ -42,116 +33,9 @@ const Itunes = () => {
         setState({ ...state, [event.target.name]: event.target.checked })
     }
 
-    /**
-     * Handle click on the <ul> results list
-     * Get the corresponding <li>, and the data attribute attached
-     * Play the song
-     * @param {object} event
-     */
-    const handleClickSong = (song) => {
-
-        songSelected=song;
-       /* const audioTag = document.querySelector('.player')
-
-        audioTag.setAttribute('src', e.target.getAttribute('data-preview'))
-        audioTag.play()*/
-    }
-
-    /**
-     * Perform a search request + add the results to the DOM
-     */
-    const search = async () => {
-        const resultListTemp = []
-
-        console.log('valeur: ' + searchValue)
-        if (!searchValue) return
-        document.querySelector('.results').innerHTML =
-            '' + '<p> chargement </p>'
-        // '<FontAwesomeIcon icon={faSpinner} spin/>'
-
-        // searchValue = searchValue.replace(' ', '+')
-
-        const response = await fetchItunesSongs(searchValue.replace(' ', '+'))
-        if (response.resultCount) {
-            document.querySelector('.no-result').style.display = 'none'
-            const songs = response.results.filter((r) => r.kind === 'song')
-            console.log('songs: ' + songs.toString())
-            let t = results.resultList ? results.resultList : []
-            songs.forEach((s) => {
-                console.log(s)
-
-                t.push(s)
-
-                // resultList.push(createSongLI(s))
-            })
-            document.querySelector('.results').innerHTML = ''
-            setResults({ resultList: t })
-            const ul = React.createElement(
-                'ul',
-                { style: { color: 'red', backgroundColor: 'blue' } },
-                null,
-                results.resultList
-            )
-
-            // document.querySelector('.results').appendChild(ul)
-        } else {
-            document.querySelector('.no-result').style.display = 'block'
-        }
-    }
-
-    /**
-     * Fetch iTunes API with HTTP GET
-     * return JSON
-     * @param {string} term
-     */
-    const fetchItunesSongs = async (term) => {
-        try {
-            const url = `${API}?term=${term}`
-            setHistorique((previousHistory) => {
-                return [...previousHistory, url]
-            })
-            console.log(...historique)
-            const response = await fetch(url)
-            console.log(response)
-            const responseJson = await response.json()
-            return responseJson
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    const handleChangeInput = (e) => {
-        setInputValue(e.target.value)
-    }
-
-    const handleChangeSearchValue = (e) => {
-        setSearchValue(e.target.value)
-        console.log(e.target.value)
-    }
-
-    const handleBtnClick = (e) => {
-        search()
-    }
-
-    const CssTextField = withStyles({
-        root: {
-            '& label': {
-                color: color,
-            },
-            '& label.Mui-focused': {
-                color: color,
-            },
-            '& .MuiInput-underline': {
-                color: color,
-            },
-            '& .MuiInput-underline:after': {
-                borderBottomColor: color,
-            },
-        },
-    })(TextField)
-
     return (
         <div className="app">
+
             <Typography
                 variant="h2"
                 className={classNames([css.lightTitleStyle], {
@@ -179,64 +63,7 @@ const Itunes = () => {
                 label={lumiere}
                 labelPlacement="top"
             />
-            <div>
-                <FormControl>
-                    <CssTextField
-                        id="custom-css-standard-input"
-                        label="Nom d'une musique"
-                        value={searchValue}
-                        style={{ height: '100%' }}
-                        onChange={handleChangeSearchValue}
-                    />
-                    <br />
-                    <Button
-                        className={classNames([], {
-                            [css.lightTheme]: theme === 'light',
-                            [css.darkTheme]: theme === 'dark',
-                        })}
-                        style={{ height: '100%' }}
-                        type="button"
-                        onClick={handleBtnClick}
-                    >
-                        Search
-                    </Button>
-                </FormControl>
-            </div>
-
-            <div className="results" id="results">
-                {(results.resultList || []).map((result, index) => {
-                   let fullUrl="/song_detail/"+result.trackId;
-
-                    return (
-                        <li
-                            className={classNames([css.lightTitleStyle], {
-                                [css.lightTitleStyle]: theme === 'light',
-                                [css.darkTitleStyle]: theme === 'dark',
-                            })}
-                            key={index}
-                            id={result.trackId}
-                            data-preview={result.previewUrl}
-                            onClick={handleClickSong(result)}
-                        >
-
-                            <h1>{result.artistName}</h1>
-                            <Link to={fullUrl}> <span>{result.trackName}</span></Link>
-
-                        </li>
-                    )
-                })}
-            </div>
-
-            <p className="no-result">
-                No results found
-                <br />
-                Try different keywords
-            </p>
-            <audio className="player" controls>
-                Your browser does not support the
-                <code>audio</code> element.
-            </audio>
-
+            <Search/>
 
         </div>
     )

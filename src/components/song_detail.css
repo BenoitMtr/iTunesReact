@@ -1,4 +1,18 @@
-p
+p, h1, h2
 {
+    font-family: system-ui;
+}
 
+.player
+{
+    position: absolute;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+Button
+{
+    display: flex;
 }
