@@ -8,6 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import { color } from '@material-ui/system'
 import { Link } from 'react-router-dom'
 import { ThemeContext } from '../themeContext'
+import SimpleCard from './Card'
 
 const API = 'https://itunes.apple.com/search'
 
@@ -88,7 +89,6 @@ const Search = () => {
 
         const response = await fetchItunesSongs(realSearchValue.replace(' ', '+'))
         if (response.resultCount) {
-            document.querySelector('.no-result').style.display = 'none'
             const songs = response.results.filter((r) => r.kind === 'song')
             console.log('songs: ' + songs.toString())
             let t = results.resultList ? results.resultList : []
@@ -160,7 +160,7 @@ const Search = () => {
 
                     return (
 
-                        <li
+                        <li style={{listStyleType: "none"}}
                             className={classNames([css.lightTitleStyle], {
                                 [css.lightTitleStyle]: theme === 'light',
                                 [css.darkTitleStyle]: theme === 'dark',
@@ -170,21 +170,12 @@ const Search = () => {
                             data-preview={result.previewUrl}
                             onClick={handleClickSong(result)}
                         >
-                            <img src={result.artworkUrl100} alt={"cover"}/>
-
-                            <h1>{result.artistName}</h1>
-                            <Link to={fullUrl}> <span>{result.trackName}</span></Link>
+                            <SimpleCard content={result} url={{fullUrl}}/>
 
                         </li>
                     )
                 })}
             </div>
-
-            <p className="no-result">
-                No results found
-                <br />
-                Try different keywords
-            </p>
         </div>
     )
 }

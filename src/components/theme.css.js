@@ -41,3 +41,6 @@ export const darkTitleStyle = css`
     color: #fafafa;
     margin-bottom: 2em !important;
 `
+export const bottomPlacement = css`
+    margin-bottom: 2em !important;
+`

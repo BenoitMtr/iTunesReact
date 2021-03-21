@@ -22,7 +22,7 @@ import Search from './search'
 
 
 const Itunes = () => {
-    const { theme, lumiere, toggleTheme } = useContext(ThemeContext)
+    const { theme, lumiere, toggleTheme, checked } = useContext(ThemeContext)
 
     const [state, setState] = React.useState({
         checkedA: true,
@@ -54,8 +54,7 @@ const Itunes = () => {
                 })}
                 control={
                     <MaterialSwitch
-                        checked={state.checkedB}
-                        onChange={handleChange}
+                        checked={checked}
                         onClick={toggleTheme}
                         name="checkedB"
                     />

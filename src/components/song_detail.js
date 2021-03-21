@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import classNames from 'classnames'
 import * as css from './theme.css'
 import React, { useContext, useEffect, useState } from 'react'
@@ -7,13 +7,14 @@ import MaterialSwitch from '@material-ui/core/Switch'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import './song_detail.css'
 import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
 
 const Songdetail= ({match}) => {
     const API = 'https://itunes.apple.com/search'
     let song;
 
-    const { theme, lumiere, color, toggleTheme } = useContext(ThemeContext)
+    const { theme, lumiere, checked, toggleTheme } = useContext(ThemeContext)
     const [state, setState] = React.useState({
         checkedA: true,
         checkedB: true,
@@ -91,8 +92,7 @@ const Songdetail= ({match}) => {
             })}
             control={
                 <MaterialSwitch
-                    checked={state.checkedB}
-                    onChange={handleChange}
+                    checked={checked}
                     onClick={toggleTheme}
                     name="checkedB"
                 />
@@ -103,12 +103,24 @@ const Songdetail= ({match}) => {
         <br/>
 
         <img src={result.artworkUrl100} alt={"disque"} width={200} height={200}/>
-        <h1>{result.trackName}</h1>
-        <h2>{result.artistName}</h2>
+        <h1 className={classNames([css.lightText], {
+            [css.lightText]: theme === 'light',
+            [css.darkText]: theme === 'dark',
+        })}>{result.trackName}</h1>
+        <h2 className={classNames([css.lightText], {
+            [css.lightText]: theme === 'light',
+            [css.darkText]: theme === 'dark',
+        })}>{result.artistName}</h2>
 
 
-        <p>{result.collectionName}</p>
-        <p>{result.primaryGenreName}</p>
+        <p className={classNames([css.lightText], {
+            [css.lightText]: theme === 'light',
+            [css.darkText]: theme === 'dark',
+        })}>{result.collectionName}</p>
+        <p className={classNames([css.lightText], {
+            [css.lightText]: theme === 'light',
+            [css.darkText]: theme === 'dark',
+        })}>{result.primaryGenreName}</p>
 
 
         <audio className="player" controls

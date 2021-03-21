@@ -1,5 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import LoginForm from './LoginForm'
+import classNames from 'classnames'
+import * as css from './theme.css'
+import { ThemeContext } from '../themeContext'
+import { Button } from '@material-ui/core'
+import FormControl from '@material-ui/core/FormControl'
 
 function Form() {
 
@@ -29,10 +34,10 @@ function Form() {
 
     const [user, setUser] = useState({ login:"",email: "", password: "" });
     const [error, setError] = useState("");
+    const {theme} = useContext(ThemeContext)
 
     const Login = details => {
         console.log(details);
-
         Utilisateurs.forEach(user =>{
            if (details.email == user.email && details.password == user.password){
                setUser({
@@ -61,8 +66,23 @@ function Form() {
         <div>
             {(user.email != "") ? (
                 <div>
-                    <h2> Bienvenue <span> {user.login}</span></h2>
-                    <button onClick={Logout}> Déconnexion </button>
+                    <h2 className={classNames([css.lightTitleStyle], {
+                        [css.lightText]: theme === 'light',
+                        [css.darkText]: theme === 'dark',
+                    })}> Bienvenue <span> {user.login}</span></h2>
+                    <FormControl>
+                        <Button
+                            className={classNames([], {
+                                [css.lightTheme]: theme === 'light',
+                                [css.darkTheme]: theme === 'dark',
+                            })}
+                            style={{ height: '100%' }}
+                            type="text"
+                            onClick={Logout}
+                        >
+                            Deconnexion
+                        </Button>
+                    </FormControl>
                 </div>
 
             ) : (
