@@ -68,3 +68,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Contribution :
+
+### Yan : 
+
+ - Affichage des cards CSS
+ - Ajout du formulaire de connexion
+ - Mode nuit
+ 
+ Aide de Yannick concernant la partie useContext et mise en place du css avec classname
+ 
+ ### Benoit :
+ 
+
+ 
