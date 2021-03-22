@@ -24,6 +24,7 @@
  - Mise en place de la partie historique
  - Mise en place de la recherche vocal + react router
  - Conversion partie du JS natif vers React
+ - Mise en place de la page de détails
  - Vidéo de démonstration: https://www.youtube.com/watch?v=zyepUrTYQGA
 
  
