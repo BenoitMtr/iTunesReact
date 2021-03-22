@@ -17,7 +17,7 @@
  - Mode nuit
  - README
  
- Aide de Yannick concernant la partie useContext et mise en place du css avec classname
+ Aide de Yannick OUALI concernant la partie useContext et mise en place du css avec classname
  
  ### Benoit :
  
